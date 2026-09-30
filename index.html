@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenAisle — Make your store ready for AI shopping agents</title>
+<meta name="description" content="OpenAisle makes e-commerce websites accessible to personal AI agents, so agents can find, compare and buy from your store.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23111'/><path d='M9 23V9h4v14zM19 23V9h4v14z' fill='%23c6f36b'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0d0b; --panel:#141612; --line:#26291f; --text:#eef0e8; --muted:#9aa08f;
+    --accent:#c6f36b; --accent-ink:#141a05;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(12,13,11,.75);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;text-decoration:none}
+  .logo i{width:26px;height:26px;border-radius:7px;background:var(--text);display:grid;place-items:center}
+  .logo i::before{content:"";width:12px;height:12px;border-left:4px solid var(--accent);border-right:4px solid var(--accent)}
+  nav ul{display:flex;gap:28px;list-style:none;font-size:14px;color:var(--muted)}
+  nav ul a{text-decoration:none}
+  nav ul a:hover{color:var(--text)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:500;font-size:15px;text-decoration:none;transition:transform .15s,background .15s}
+  .btn-primary{background:var(--accent);color:var(--accent-ink)}
+  .btn-primary:hover{transform:translateY(-1px)}
+  .btn-ghost{border:1px solid var(--line);color:var(--text)}
+  .btn-ghost:hover{background:var(--panel)}
+  nav .btn{padding:8px 14px;font-size:14px}
+
+  /* hero */
+  .hero{padding:96px 0 72px;position:relative}
+  .hero::before{content:"";position:absolute;inset:-200px 0 auto;height:600px;background:radial-gradient(600px 300px at 70% 30%,rgba(198,243,107,.12),transparent 70%);pointer-events:none}
+  .tag{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .tag b{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  h1{font-size:clamp(44px,7.4vw,92px);line-height:.98;letter-spacing:-.02em;margin:28px 0 24px;max-width:14ch}
+  h1 em{color:var(--accent)}
+  .lead{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:56ch}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+
+  /* terminal demo */
+  .demo{margin-top:72px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .card-h{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .card-h .dots{display:flex;gap:6px}
+  .card-h .dots span{width:10px;height:10px;border-radius:50%;background:var(--line)}
+  .card pre{padding:18px 18px 22px;font-size:13px;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:#cfd4c4}
+  .bad{color:#ff8a7a}.ok{color:var(--accent)}.dim{color:#6b7062}
+  .label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+  .label.bad{background:rgba(255,138,122,.1)}.label.ok{background:rgba(198,243,107,.1)}
+
+  section{padding:96px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+  h2{font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.015em;max-width:20ch}
+  .sub{color:var(--muted);max-width:60ch;margin-top:18px;font-size:17px}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+  .stat{padding:28px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+  .stat .n{font-size:48px;line-height:1}
+  .stat p{color:var(--muted);font-size:15px;margin-top:12px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+  .step{padding:28px;border:1px solid var(--line);border-radius:16px;position:relative}
+  .step .k{font-size:12px;color:var(--muted)}
+  .step h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin:40px 0 10px}
+  .step p{color:var(--muted);font-size:15px}
+
+  /* features */
+  .feats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:48px}
+  .feat{background:var(--bg);padding:32px}
+  .feat h3{font-size:18px;font-weight:600;margin-bottom:8px}
+  .feat p{color:var(--muted);font-size:15px}
+  .feat .ic{font-size:13px;color:var(--accent);margin-bottom:18px}
+
+  /* contact */
+  .contact{text-align:center}
+  .contact h2{margin:0 auto}
+  .contact .sub{margin:18px auto 0}
+  .contact .cta{justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:820px){
+    nav ul{display:none}
+    .demo,.stats,.steps,.feats{grid-template-columns:1fr}
+    .hero{padding:64px 0 48px}
+    section{padding:72px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo"><i></i>OpenAisle</a>
+    <ul>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#product">Product</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary">Get early access</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag"><b></b>Now onboarding design partners</span>
+    <h1 class="serif">Your next customer <em>isn't human.</em></h1>
+    <p class="lead">Personal AI agents are starting to shop on behalf of people. OpenAisle makes e‑commerce websites accessible to those agents — so they can find, understand and buy from your store, reliably.</p>
+    <div class="cta">
+      <a href="#contact" class="btn btn-primary">Become a design partner →</a>
+      <a href="#how" class="btn btn-ghost">See how it works</a>
+    </div>
+
+    <div class="demo">
+      <div class="card">
+        <div class="card-h"><div class="dots"><span></span><span></span><span></span></div><span class="label bad mono">Without OpenAisle</span></div>
+<pre class="mono"><span class="dim">agent ›</span> "Buy running shoes, size 43, under ₪400"
+<span class="dim">→ loading store.com …</span>
+<span class="bad">✕ cookie banner blocks page</span>
+<span class="bad">✕ size selector is a custom &lt;div&gt; widget</span>
+<span class="bad">✕ price rendered client-side, not readable</span>
+<span class="bad">✕ checkout requires hover menu</span>
+<span class="dim">→ giving up, trying a competitor</span></pre>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="dots"><span></span><span></span><span></span></div><span class="label ok mono">With OpenAisle</span></div>
+<pre class="mono"><span class="dim">agent ›</span> "Buy running shoes, size 43, under ₪400"
+<span class="dim">→ found agent manifest at store.com</span>
+<span class="ok">✓ catalog.search(size=43, max=400)</span>  <span class="dim">12 results</span>
+<span class="ok">✓ product.inventory("RN-2291")</span>  <span class="dim">in stock</span>
+<span class="ok">✓ cart.add → checkout.handoff</span>
+<span class="dim">→ order placed in 4.2s</span></pre>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="eyebrow mono">The problem</div>
+    <h2 class="serif">The web was built for eyes and mouse clicks. Agents have neither.</h2>
+    <p class="sub">Online stores are full of pop‑ups, dynamic widgets, and flows designed for humans. When an AI agent visits, it gets lost, guesses, or leaves — and the sale goes to whoever is easiest to read.</p>
+    <div class="stats">
+      <div class="stat"><div class="n serif">Invisible</div><p>Agent traffic doesn't show up as customers in your analytics — you never see the sales you lost.</p></div>
+      <div class="stat"><div class="n serif">Fragile</div><p>Agents that scrape and click break every time your theme, layout or checkout changes.</p></div>
+      <div class="stat"><div class="n serif">Winner‑takes‑all</div><p>Agents favor the stores they can transact with reliably. Early movers get the default slot.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow mono">How it works</div>
+    <h2 class="serif">Agent‑ready in an afternoon, not a replatform.</h2>
+    <div class="steps">
+      <div class="step"><div class="k mono">01 — Scan</div><h3>Audit your store</h3><p>We crawl your site the way an agent does and score where agents fail: discovery, product data, variants, cart and checkout.</p></div>
+      <div class="step"><div class="k mono">02 — Connect</div><h3>Add one snippet</h3><p>Install OpenAisle on Shopify, WooCommerce or a custom stack. We generate a structured, agent‑readable layer from your existing catalog.</p></div>
+      <div class="step"><div class="k mono">03 — Sell</div><h3>Serve agents directly</h3><p>Agents get clean actions — search, compare, add to cart, check out — while your human storefront stays exactly as it is.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="wrap">
+    <div class="eyebrow mono">What you get</div>
+    <h2 class="serif">Everything an agent needs to become a customer.</h2>
+    <div class="feats">
+      <div class="feat"><div class="ic mono">/ readiness score</div><h3>Agent Readiness Audit</h3><p>A clear score and a prioritized fix list showing exactly where AI agents drop off in your funnel.</p></div>
+      <div class="feat"><div class="ic mono">/ agent layer</div><h3>Structured store interface</h3><p>Products, variants, prices, stock and policies exposed through open standards like MCP and schema.org.</p></div>
+      <div class="feat"><div class="ic mono">/ checkout</div><h3>Safe agent checkout</h3><p>Secure cart and checkout handoff with the guardrails merchants need — limits, confirmations and fraud signals.</p></div>
+      <div class="feat"><div class="ic mono">/ analytics</div><h3>Agent traffic analytics</h3><p>See which agents visit, what they look for, and how much revenue they drive — a channel you can finally measure.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="eyebrow mono">Early access</div>
+    <h2 class="serif">Be one of the first stores agents can shop.</h2>
+    <p class="sub">We're working with a small group of e‑commerce brands as design partners. Get a free agent‑readiness audit of your store.</p>
+    <div class="cta">
+      <a id="email-link" href="mailto:hello@openaisle.ai" class="btn btn-primary">hello@openaisle.ai</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 OpenAisle · Tel Aviv</span>
+    <span>Making commerce accessible to AI agents.</span>
+  </div>
+</footer>
+
+</body>
+</html>
